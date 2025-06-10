@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Profil - TunisFoot</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Styles spécifiques à la page de profil */
+        .profile-page-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: var(--grey-bg);
+        }
+
+        .profile-header-banner {
+            background-color: var(--primary-green);
+            color: var(--white);
+            padding: 40px 0;
+            text-align: center;
+            position: relative; /* Pour le positionnement du message de bienvenue */
+            overflow: hidden;
+        }
+
+        .profile-header-banner h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            color: var(--white);
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-header-banner p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Effet de motif pour la bannière */
+        .profile-header-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><g fill="%23FFFFFF" fill-opacity="0.1" fill-rule="evenodd"><circle cx="0" cy="0" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="0" cy="10" r="1.6"/><circle cx="10" cy="0" r="1.6"/></g></svg>');
+            background-size: 20px 20px;
+            opacity: 0.2;
+            z-index: 1;
+        }
+
+
+        .profile-main-content {
+            flex-grow: 1;
+            padding: 40px 0;
+        }
+
+        .profile-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr; /* Largeur de la sidebar et du contenu */
+            gap: 40px;
+            align-items: start; /* Alignement en haut */
+        }
+
+        .profile-sidebar {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+        }
+
+        .profile-sidebar ul {
+            padding: 0;
+        }
+
+        .profile-sidebar ul li {
+            margin-bottom: 10px;
+        }
+
+        .profile-sidebar ul li a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 15px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .profile-sidebar ul li a:hover,
+        .profile-sidebar ul li a.active {
+            background-color: var(--light-green);
+            color: var(--primary-green);
+        }
+
+        .profile-sidebar ul li a i {
+            font-size: 1.2em;
+            color: var(--light-text-color); /* Couleur des icônes par défaut */
+            transition: color 0.3s ease;
+        }
+
+        .profile-sidebar ul li a.active i,
+        .profile-sidebar ul li a:hover i {
+            color: var(--primary-green); /* Couleur des icônes au survol ou actif */
+        }
+
+        .profile-content-area {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+        }
+
+        .profile-section {
+            margin-bottom: 40px;
+        }
+
+        .profile-section h3 {
+            font-size: 1.8em;
+            color: var(--primary-green);
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Carte de réservation / élément de liste */
+        .reservation-card, .statistic-card {
+            background-color: var(--grey-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .reservation-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .reservation-card .icon-box {
+            background-color: var(--primary-green);
+            color: var(--white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5em;
+            flex-shrink: 0;
+        }
+
+        .reservation-details {
+            flex-grow: 1;
+        }
+        .reservation-details p {
+            margin: 5px 0;
+            color: var(--text-color);
+        }
+        .reservation-details strong {
+            color: var(--dark-green);
+        }
+        .reservation-details .status {
+            font-weight: bold;
+            color: #28a745; /* Green for confirmed */
+        }
+
+        /* Cartes de statistiques */
+        .statistics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .statistic-card {
+            background-color: var(--light-green);
+            flex-direction: column;
+            align-items: flex-start;
+            border: 1px solid var(--primary-green);
+            box-shadow: none;
+            padding: 25px;
+        }
+        .statistic-card .icon-box {
+            background-color: var(--primary-green);
+            margin-bottom: 15px;
+        }
+        .statistic-card h4 {
+            margin-bottom: 5px;
+            font-size: 1.3em;
+            color: var(--text-color);
+        }
+        .statistic-card .value {
+            font-size: 2.2em;
+            font-weight: bold;
+            color: var(--dark-green);
+        }
+        .statistic-card p {
+            font-size: 0.9em;
+            color: var(--light-text-color);
+        }
+
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .profile-layout {
+                grid-template-columns: 1fr; /* Passe à une seule colonne */
+            }
+            .profile-sidebar {
+                margin: 0 20px; /* Ajoute des marges sur les côtés */
+            }
+            .profile-sidebar ul {
+                display: flex;
+                flex-wrap: wrap; /* Permet aux éléments de passer à la ligne */
+                justify-content: center;
+                gap: 10px;
+            }
+            .profile-sidebar ul li {
+                margin-bottom: 0;
+            }
+            .profile-sidebar ul li a {
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
+            .profile-content-area {
+                padding: 20px;
+                margin: 0 20px; /* Ajoute des marges sur les côtés */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .profile-header-banner h1 {
+                font-size: 2.2em;
+            }
+            .profile-header-banner p {
+                font-size: 1em;
+            }
+            .profile-main-content {
+                padding: 20px 0;
+            }
+            .profile-section h3 {
+                font-size: 1.5em;
+            }
+            .reservation-card {
+                flex-direction: column;
+                align-items: flex-start;
+                text-align: left;
+            }
+            .reservation-card .icon-box {
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-page-wrapper">
+        <header class="main-header">
+            <div class="container">
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="images/logo.png" alt="TunisFoot Logo">
+                    </a>
+                </div>
+                <nav class="main-nav">
+                    <ul class="nav-list">
+                        <li><a href="index.html#accueil">Accueil</a></li>
+                        <li><a href="index.html#fonctionnalites">Fonctionnalités</a></li>
+                        <li><a href="index.html#application">Application</a></li>
+                        <li><a href="index.html#impact">Impact</a></li>
+                    </ul>
+                    <button class="btn-connecter" id="logoutButton">Déconnexion</button>
+                </nav>
+                <div class="hamburger-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </header>
+
+        <div class="profile-header-banner">
+            <h1>Bienvenue, Yosri !</h1>
+            <p>Gérez vos réservations, statistiques et paramètres de profil ici.</p>
+        </div>
+
+        <main class="profile-main-content container">
+            <div class="profile-layout">
+                <aside class="profile-sidebar">
+                    <ul>
+                        <li><a href="#dashboard" class="active"><i class="fas fa-tachometer-alt"></i> Tableau de Bord</a></li>
+                        <li><a href="#my-reservations"><i class="fas fa-calendar-alt"></i> Mes Réservations</a></li>
+                        <li><a href="#favorite-fields"><i class="fas fa-heart"></i> Terrains Favoris</a></li>
+                        <li><a href="#account-settings"><i class="fas fa-cog"></i> Paramètres du Compte</a></li>
+                        <li><a href="#payment-history"><i class="fas fa-wallet"></i> Historique des Paiements</a></li>
+                    </ul>
+                </aside>
+
+                <section class="profile-content-area">
+                    <div id="dashboard" class="profile-section active-content">
+                        <h3>Tableau de Bord</h3>
+                        <div class="statistics-grid">
+                            <div class="statistic-card">
+                                <div class="icon-box"><i class="fas fa-futbol"></i></div>
+                                <h4>Réservations ce mois</h4>
+                                <div class="value">3</div>
+                                <p>Terrains réservés</p>
+                            </div>
+                            <div class="statistic-card">
+                                <div class="icon-box"><i class="fas fa-euro-sign"></i></div>
+                                <h4>Total dépensé</h4>
+                                <div class="value">210 DT</div>
+                                <p>Depuis le début</p>
+                            </div>
+                            <div class="statistic-card">
+                                <div class="icon-box"><i class="fas fa-running"></i></div>
+                                <h4>Matchs joués</h4>
+                                <div class="value">12</div>
+                                <p>Avec TunisFoot</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="my-reservations" class="profile-section" style="display: none;">
+                        <h3>Mes Prochaines Réservations</h3>
+                        <div class="reservation-card">
+                            <div class="icon-box"><i class="fas fa-calendar-check"></i></div>
+                            <div class="reservation-details">
+                                <p><strong>Stade:</strong> Stade DUO (Football 11)</p>
+                                <p><strong>Date:</strong> Vendredi, 14 Juin 2025</p>
+                                <p><strong>Heure:</strong> 18:00 - 19:00</p>
+                                <p><strong>Prix:</strong> 70 DT</p>
+                                <p class="status">Statut: Confirmée</p>
+                            </div>
+                        </div>
+                        <div class="reservation-card">
+                            <div class="icon-box"><i class="fas fa-hourglass-half"></i></div>
+                            <div class="reservation-details">
+                                <p><strong>Stade:</strong> GONDOLE SPORT (Football 7)</p>
+                                <p><strong>Date:</strong> Dimanche, 23 Juin 2025</p>
+                                <p><strong>Heure:</strong> 10:00 - 11:00</p>
+                                <p><strong>Prix:</strong> 60 DT</p>
+                                <p class="status" style="color: #FFC107;">Statut: En attente de paiement</p>
+                            </div>
+                        </div>
+                        <p>Aucune réservation passée affichée.</p>
+                    </div>
+
+                    <div id="favorite-fields" class="profile-section" style="display: none;">
+                        <h3>Mes Terrains Favoris</h3>
+                        <p>Vous n'avez pas encore ajouté de terrains à vos favoris.</p>
+                        </div>
+
+                    <div id="account-settings" class="profile-section" style="display: none;">
+                        <h3>Paramètres du Compte</h3>
+                        <form>
+                            <div class="form-group">
+                                <label for="name">Nom Complet</label>
+                                <input type="text" id="name" value="Yosri saadallah">
+                            </div>
+                            <div class="form-group">
+                                <label for="profileEmail">Email</label>
+                                <input type="email" id="profileEmail" value="yosri.vw@gmail.com" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Téléphone</label>
+                                <input type="tel" id="phone" value="+216 23 933 566">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Mettre à jour le profil</button>
+                        </form>
+                    </div>
+
+                    <div id="payment-history" class="profile-section" style="display: none;">
+                        <h3>Historique des Paiements</h3>
+                        <p>Aucun historique de paiement disponible pour le moment.</p>
+                        </div>
+                </section>
+            </div>
+        </main>
+
+        <footer class="main-footer">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-col footer-about">
+                        <img src="images/logo.png" alt="TunisFoot Logo" class="footer-logo">
+                        <p>La première plateforme de réservation de terrains de football en Tunisie.</p>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Produit</h4>
+                        <ul>
+                            <li><a href="#">Application Mobile</a></li>
+                            <li><a href="#">Interface Gestionnaire</a></li>
+                            <li><a href="#">API & Intégrations</a></li>
+                            <li><a href="#">Support</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>À Propos</h4>
+                        <ul>
+                            <li><a href="#">Notre Équipe</a></li>
+                            <li><a href="#">Carrières</a></li>
+                            <li><a href="#">Presse</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Légal & Contact</h4>
+                        <ul>
+                            <li><a href="#">Confidentialité</a></li>
+                            <li><a href="#">Conditions d'utilisation</a></li>
+                            <li><a href="#">Cookies</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 TunisFoot. Tous droits réservés. Fait avec ❤️ en Tunisie.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Script spécifique à la page de profil pour la navigation latérale
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebarLinks = document.querySelectorAll('.profile-sidebar ul li a');
+            const profileSections = document.querySelectorAll('.profile-section');
+
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault(); // Empêche le comportement de lien par défaut
+
+                    // Supprime la classe 'active' de tous les liens de la sidebar
+                    sidebarLinks.forEach(item => item.classList.remove('active'));
+                    // Ajoute la classe 'active' au lien cliqué
+                    this.classList.add('active');
+
+                    // Cache toutes les sections de profil
+                    profileSections.forEach(section => section.style.display = 'none');
+
+                    // Affiche la section correspondant à l'ID du lien
+                    const targetId = this.getAttribute('href').substring(1); // Supprime le '#'
+                    const targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        targetSection.style.display = 'block';
+                    }
+                });
+            });
+
+            // Gère le bouton de déconnexion
+            document.getElementById('logoutButton').addEventListener('click', function() {
+                // Dans un VRAI projet, vous enverriez une requête au backend pour invalider la session
+                alert('Déconnexion réussie !');
+                window.location.href = 'login.html'; // Redirige vers la page de connexion
+            });
+
+            // Active la section 'Tableau de Bord' par défaut au chargement
+            const defaultSectionId = 'dashboard';
+            const defaultLink = document.querySelector(`.profile-sidebar ul li a[href="#${defaultSectionId}"]`);
+            if (defaultLink) {
+                defaultLink.click(); // Simule un clic pour activer la section par défaut
+            }
+        });
+    </script>
+</body>
+</html>

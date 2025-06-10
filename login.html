@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - TunisFoot</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Styles spécifiques à la page de connexion */
+        body {
+            background-color: var(--grey-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: auto; /* Permet le défilement si le contenu est trop grand */
+        }
+
+        .login-container {
+            background-color: var(--white);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            margin: 20px; /* Ajoute un peu de marge pour les petits écrans */
+        }
+
+        .login-container h2 {
+            font-size: 2em;
+            color: var(--primary-green);
+            margin-bottom: 30px;
+        }
+
+        .login-logo {
+            margin-bottom: 30px;
+        }
+        .login-logo img {
+            height: 60px; /* Ajustez la taille du logo si nécessaire */
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+            outline: none;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-green);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-login:hover {
+            background-color: var(--dark-green);
+        }
+
+        .links {
+            margin-top: 25px;
+            font-size: 0.95em;
+        }
+
+        .links a {
+            color: var(--primary-green);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .links a:hover {
+            color: var(--dark-green);
+            text-decoration: underline;
+        }
+
+        .links p {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-logo">
+            <img src="images/logo.png" alt="TunisFoot Logo">
+        </div>
+        <h2>Connectez-vous</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">Email ou Nom d'utilisateur</label>
+                <input type="text" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn-login">Se Connecter</button>
+        </form>
+        <div class="links">
+            <p><a href="#">Mot de passe oublié ?</a></p>
+<p>Pas encore de compte ? <a href="register.html">S'inscrire</a></p>        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Empêche l'envoi du formulaire par défaut
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // --- Logique de connexion frontend basique (pour démonstration) ---
+          if (email === 'test@example.com' && password === '123') {
+    alert('Connexion réussie ! Redirection vers la page de profil.');
+    window.location.href = 'profile.html'; // Cette ligne redirige
+} else if (email === '' || password === '') {
+    alert('Veuillez remplir tous les champs.');
+} else {
+    alert('Email ou mot de passe incorrect.');
+}
+      
+        });
+    </script>
+</body>
+</html>

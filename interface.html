@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TunisFoot - Interface</title>
+    <style>
+        :root {
+            --primary-color: #2ecc71;
+            --secondary-color: #3498db;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --text-color: #333;
+            --border-radius: 10px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+        }
+
+        .app-header h1 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .app-nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        .app-nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .app-nav a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Interface Container */
+        .interface-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Interface Cards */
+        .interface-card {
+            flex: 1;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .card-header h2 {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .time-display {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        /* Reservations */
+        .reservation-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .reservation-info h3 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .reservation-info p {
+            font-size: 0.8rem;
+            color: #777;
+        }
+
+        /* Date Picker */
+        .date-picker {
+            margin: 15px 0;
+        }
+
+        .date-picker table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .date-picker th, .date-picker td {
+            text-align: center;
+            padding: 5px;
+        }
+
+        .date-picker th {
+            font-size: 0.8rem;
+            color: #777;
+        }
+
+        .date-picker td {
+            font-size: 0.9rem;
+        }
+
+        .current-day {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Time Slots */
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .time-slot {
+            background-color: var(--light-color);
+            border-radius: 5px;
+            padding: 8px;
+            text-align: center;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .time-slot:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Popular Stadia */
+        .stadium-card {
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            background-color: var(--light-color);
+        }
+
+        .stadium-icon {
+            width: 30px;
+            height: 30px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .stadium-info h3 {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .stadium-info p {
+            font-size: 0.8rem;
+            color: #777;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .action-btn {
+            flex: 1;
+            background-color: var(--light-color);
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .action-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Recent Reservations */
+        .recent-reservation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: var(--light-color);
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .reservation-details h3 {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .reservation-details p {
+            font-size: 0.8rem;
+            color: #777;
+        }
+
+        .reservation-price {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        /* Join Match */
+        .join-match {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+
+        .join-match p {
+            font-size: 0.9rem;
+        }
+
+        .check-icon {
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .interface-container {
+                flex-direction: column;
+            }
+            
+            .time-slots {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .app-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .app-nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .time-slots {
+                grid-template-columns: 1fr;
+            }
+            
+            .quick-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="app-header">
+            <h1>TunisFoot</h1>
+            <nav class="app-nav">
+                <a href="#">Accueil</a>
+                <a href="#">Fonctionnalités</a>
+                <a href="#">Application</a>
+                <a href="#">Impact</a>
+                <a href="#">Se Connecter</a>
+            </nav>
+        </header>
+
+        <!-- Interface Container -->
+        <div class="interface-container">
+            <!-- First Card - User Dashboard -->
+            <div class="interface-card">
+                <div class="card-header">
+                    <h2>Bonjour Yosri</h2>
+                    <span class="time-display">9:41</span>
+                </div>
+                
+                <div class="search-bar">
+                    <input type="text" placeholder="Rechercher un terrain...">
+                </div>
+                
+                <h3>Réservations</h3>
+                
+                <div class="reservation-item">
+                    <div class="reservation-info">
+                        <h3>Stade DUO</h3>
+                        <p>Terrain synthétique</p>
+                    </div>
+                </div>
+                
+                <div class="date-picker">
+                    <h4>Choisir la date</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Lu</th>
+                                <th>Ma</th>
+                                <th>Me</th>
+                                <th>Je</th>
+                                <th>Ve</th>
+                                <th>Sa</th>
+                                <th>Di</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>15</td>
+                                <td>16</td>
+                                <td>17</td>
+                            </tr>
+                            <tr>
+                                <td>18</td>
+                                <td>19</td>
+                                <td>20</td>
+                                <td>21</td>
+                                <td>22</td>
+                                <td>23</td>
+                                <td>24</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Second Card - Time Slots -->
+            <div class="interface-card">
+                <div class="card-header">
+                    <h2>Créneaux disponibles</h2>
+                </div>
+                
+                <div class="time-slots">
+                    <div class="time-slot">10:00-11:00</div>
+                    <div class="time-slot">11:00-12:00</div>
+                    <div class="time-slot">12:00-13:00</div>
+                    <div class="time-slot">13:00-14:00</div>
+                    <div class="time-slot">14:00-15:00</div>
+                    <div class="time-slot">15:00-16:00</div>
+                    <div class="time-slot">16:00-17:00</div>
+                    <div class="time-slot">17:00-18:00</div>
+                    <div class="time-slot">18:00-19:00</div>
+                </div>
+                
+                <div>
+                    <h3>Réservation</h3>
+                    <p>Processus simple et rapide</p>
+                </div>
+                
+                <div>
+                    <h3>Tableau de Bord</h3>
+                    <p>Stade Et Merrath</p>
+                </div>
+                
+                <div class="quick-actions">
+                    <button class="action-btn">
+                        <span>Gérer le Planning</span>
+                        <span>Modifier les créneaux</span>
+                    </button>
+                    <button class="action-btn">
+                        <span>Voir les Statistiques</span>
+                        <span>Revenus à conception</span>
+                    </button>
+                </div>
+                
+                <h3>Réservations Récentes</h3>
+                
+                <div class="recent-reservation">
+                    <div class="reservation-details">
+                        <h3>Stade YOSRI</h3>
+                        <p>Autour du YOSRI-NGO</p>
+                    </div>
+                    <div class="reservation-price">30 DT</div>
+                </div>
+            </div>
+            
+            <!-- Third Card - Popular Stadia -->
+            <div class="interface-card">
+                <div class="card-header">
+                    <h2>Terrains Populaires</h2>
+                </div>
+                
+                <button class="action-btn" style="background-color: var(--primary-color); color: white;">
+                    Réserver
+                </button>
+                
+                <p>Terrain libre</p>
+                
+                <div class="stadium-card">
+                    <div class="stadium-icon">EM</div>
+                    <div class="stadium-info">
+                        <h3>Stade DUO</h3>
+                        <p>Rte tunis km 2 sfax 70 DT/heure</p>
+                    </div>
+                </div>
+                
+                <div class="stadium-card">
+                    <div class="stadium-icon">SC</div>
+                    <div class="stadium-info">
+                        <h3>Stade MIAMI</h3>
+                        <p>Rte sidi mansour km 3 sfax 60 DT/heure</p>
+                    </div>
+                </div>
+                
+                <div class="join-match">
+                    <p>Rejoindre Un match</p>
+                    <div class="check-icon">✓</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
